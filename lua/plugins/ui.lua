@@ -404,7 +404,7 @@ return {
   { -- show images in nvim!
     '3rd/image.nvim',
     enabled = true,
-    dev = false,
+    dev = true,
     -- fix to commit to keep using the rockspeck for image magick
     ft = { 'markdown', 'quarto', 'vimwiki' },
     cond = function()
