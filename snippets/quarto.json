@@ -11,6 +11,22 @@
       "```"
     ]
   },
+  "<style": {
+    "prefix": ["<style"],
+    "body": [
+      "<style>",
+      "$1",
+      "</style>"
+    ]
+  },
+  "style": {
+    "prefix": ["style"],
+    "body": [
+      "<style>",
+      "$1",
+      "</style>"
+    ]
+  },
   "iframe": {
     "prefix": ["iframe"],
     "body": [
