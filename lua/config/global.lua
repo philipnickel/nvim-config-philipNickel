@@ -133,3 +133,9 @@ vim.filetype.add {
 -- additional builtin vim packages
 -- filter quickfix list with Cfilter
 vim.cmd.packadd 'cfilter'
+
+-- use commands
+
+vim.api.nvim_create_user_command("CopyRelPath", "call setreg('+', expand('%'))", {})
+vim.api.nvim_create_user_command("CopyPath", "call setreg('+', expand('%:p'))", {})
+

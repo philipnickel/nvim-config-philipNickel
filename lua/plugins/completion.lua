@@ -36,7 +36,7 @@ return {
     opts = {
       keymap = {
         preset = 'enter',
-        ['<c-y>'] = { 'show_documentation', 'hide_documentation' },
+        ['<c-y>'] = { 'show', 'show_documentation', 'hide_documentation' },
         ['<c-k>'] = {},
       },
       cmdline = {
