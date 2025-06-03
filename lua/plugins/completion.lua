@@ -50,13 +50,7 @@ return {
             name = 'Emoji',
             score_offset = -1,
             enabled = function()
-              local lang_tree = vim.treesitter.get_parser(bufnr)
-              if lang_tree == nil then
-                return false
-              end
-              local curline = vim.fn.line(".")
-              local lang = lang_tree:language_for_range({curline, 0, curline, 0}):lang()
-              return vim.tbl_contains({ 'markdown', 'rmarkdown', 'quarto' }, lang)
+              return vim.tbl_contains({ 'markdown'}, vim.bo.filetype)
             end,
           },
           lazydev = {
