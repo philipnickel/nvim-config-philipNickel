@@ -1,6 +1,5 @@
 return {
-
-  { -- for lsp features in code cells / embedded code
+  {
     'jmbuhr/otter.nvim',
     dev = false,
     dependencies = {
@@ -12,77 +11,71 @@ return {
     opts = {
       buffers = {
         use_simple_parser = true,
-      }
+      },
     },
   },
 
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      { 'williamboman/mason.nvim' },
-      { 'williamboman/mason-lspconfig.nvim' },
-      { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
-      { -- nice loading notifications
-        -- PERF: but can slow down startup
-        'j-hui/fidget.nvim',
-        enabled = false,
-        opts = {},
+      { 'mason-org/mason.nvim',
+        opts = {}
+      },
+      {
+        'mason-org/mason-lspconfig.nvim',
+        opts = {
+          ensure_installed = {
+            'lua_ls',
+            'bashls',
+            'cssls',
+            'html',
+            'pyright',
+            'r_language_server',
+            'texlab',
+            'dotls',
+            'svelte',
+            'ts_ls',
+            'yamlls',
+            'clangd',
+            -- 'sqlls',
+            -- 'emmet_language_server',
+            -- 'hls',
+            -- 'julia-lsp'
+            -- 'rust-analyzer',
+            -- 'marksman',
+          },
+        },
+      },
+      {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        opts = {
+          ensure_installed = {
+            'black',
+            'stylua',
+            'shfmt',
+            'isort',
+            'tree-sitter-cli',
+            'jupytext',
+          },
+        },
       },
       {
         {
           'folke/lazydev.nvim',
-          ft = 'lua', -- only load on lua files
+          ft = 'lua',
           opts = {
             library = {
-              -- See the configuration section for more details
-              -- Load luvit types when the `vim.uv` word is found
               { path = 'luvit-meta/library', words = { 'vim%.uv' } },
             },
           },
         },
-        { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
+        { 'Bilal2453/luvit-meta', lazy = true },
       },
       { 'folke/neoconf.nvim', opts = {}, enabled = false },
     },
     config = function()
       local lspconfig = require 'lspconfig'
       local util = require 'lspconfig.util'
-
-      require('mason').setup {
-        ensure_installed = {
-          'lua-language-server',
-          'bash-language-server',
-          'css-lsp',
-          'html-lsp',
-          'json-lsp',
-          'haskell-language-server',
-          'pyright',
-          'r-languageserver',
-          'texlab',
-          'dotls',
-          'svelte-language-server',
-          'typescript-language-server',
-          'yaml-language-server',
-          'clangd',
-          'css-lsp',
-          'emmet-ls',
-          'html-lsp',
-          'sqlls'
-          -- 'julia-lsp'
-          -- 'rust-analyzer',
-          --'marksman',
-        },
-      }
-      require('mason-tool-installer').setup {
-        ensure_installed = {
-          'black',
-          'stylua',
-          'shfmt',
-          'isort',
-          'tree-sitter-cli',
-          'jupytext',
-        },
-      }
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -108,9 +101,6 @@ return {
         debounce_text_changes = 150,
       }
 
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
 
       -- also needs:
@@ -225,13 +215,11 @@ return {
             },
             runtime = {
               version = 'LuaJIT',
-              -- plugin = lua_plugin_paths, -- handled by lazydev
             },
             diagnostics = {
               disable = { 'trailing-space' },
             },
             workspace = {
-              -- library = lua_library_files, -- handled by lazydev
               checkThirdParty = false,
             },
             doc = {
@@ -260,9 +248,6 @@ return {
         filetypes = { 'sh', 'bash' },
       }
 
-      -- Add additional languages here.
-      -- See `:h lspconfig-all` for the configuration.
-      -- Like e.g. Haskell:
       -- lspconfig.hls.setup {
       --   capabilities = capabilities,
       --   flags = lsp_flags,
