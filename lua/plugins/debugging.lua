@@ -6,7 +6,13 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require('neotest').setup {
         adapters = {
-          require 'neotest-python',
+          require 'neotest-python'({
+            python = function ()
+              -- Use the virtual environment if it exists, otherwise use the system Python
+              local venv = vim.fn.getenv('VIRTUAL_ENV')
+              return "python"
+            end,
+          }),
         },
       }
     end,
@@ -36,7 +42,6 @@ return {
       local ui = require 'dapui'
       require('dapui').setup()
       require('dap-python').setup()
-      require('dap.ext.vscode').load_launchjs 'launch.json'
 
       require('nvim-dap-virtual-text').setup {
         -- Hides tokens, secrets, and other sensitive information

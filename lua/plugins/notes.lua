@@ -20,6 +20,7 @@ return {
 
   {
     'obsidian-nvim/obsidian.nvim',
+    version = '*',
     enabled = true,
     lazy = false,
     ft = 'markdown',
@@ -38,9 +39,8 @@ return {
       { '<leader>no', ':ObsidianQuickSwitch<cr>', desc = 'obsidian [o]pen quickswitch' },
       { '<leader>nO', ':ObsidianOpen<cr>', desc = 'obsidian [O]pen in app' },
     },
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('obsidian').setup {
+    opts = {
+        legacy_commands = false,
         ui = {
           checkboxes = { [' '] = {}, ['x'] = {} },
           enable = false,
@@ -89,6 +89,5 @@ return {
           return tostring(os.time()) .. '-' .. suffix
         end,
       }
-    end,
   },
 }
