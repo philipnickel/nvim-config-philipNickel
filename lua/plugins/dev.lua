@@ -1,9 +1,4 @@
 return {
-
-  {
-    'seandewar/actually-doom.nvim'
-  },
-
   { -- profile your config to see what code is executed
     'stevearc/profile.nvim',
     enabled = false,
