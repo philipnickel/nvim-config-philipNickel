@@ -50,7 +50,7 @@ return {
             name = 'Emoji',
             score_offset = -1,
             enabled = function()
-              return vim.tbl_contains({ 'markdown'}, vim.bo.filetype)
+              return vim.tbl_contains({ 'markdown' }, vim.bo.filetype)
             end,
           },
           lazydev = {
@@ -96,66 +96,5 @@ return {
       },
       signature = { enabled = true },
     },
-  },
-
-  { -- gh copilot
-    'zbirenbaum/copilot.lua',
-    enabled = true,
-    config = function()
-      require('copilot').setup {
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = '<c-a>',
-            accept_word = false,
-            accept_line = false,
-            next = '<M-]>',
-            prev = '<M-[>',
-            dismiss = '<C-]>',
-          },
-        },
-        panel = { enabled = false },
-      }
-    end,
-  },
-
-  { -- LLMs
-    'olimorris/codecompanion.nvim',
-    version = '*',
-    enabled = true,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-telescope/telescope.nvim',
-    },
-    keys = {
-      { '<leader>ac', ':CodeCompanionChat Toggle<cr>', desc = '[a]i [c]hat' },
-      { '<leader>aa', ':CodeCompanionActions<cr>', desc = '[a]i [a]actions' },
-    },
-    config = function()
-      require('codecompanion').setup {
-        display = {
-          diff = {
-            enabled = true,
-          },
-        },
-        strategies = {
-          chat = {
-            -- adapter = "ollama",
-            adapter = 'copilot',
-          },
-          inline = {
-            -- adapter = "ollama",
-            adapter = 'copilot',
-          },
-          agent = {
-            -- adapter = "ollama",
-            adapter = 'copilot',
-          },
-        },
-      }
-    end,
   },
 }
