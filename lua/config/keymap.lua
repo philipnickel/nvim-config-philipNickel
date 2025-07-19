@@ -167,9 +167,12 @@ local function toggle_light_dark_theme()
   end
 end
 
-local is_code_chunk = function()
-  local current, _ = require('otter.keeper').get_current_language_context()
-  if current then
+---Is the current context a code chunk?
+---@param lang string language of the code chunk
+---@return boolean
+local is_code_chunk = function(lang)
+  local current = require('otter.keeper').get_current_language_context()
+  if current == lang then
     return true
   else
     return false
@@ -182,7 +185,7 @@ end
 local insert_code_chunk = function(lang)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'n', true)
   local keys
-  if is_code_chunk() then
+  if is_code_chunk(lang) then
     keys = [[o```<cr><cr>```{]] .. lang .. [[}<esc>o]]
   else
     keys = [[o```{]] .. lang .. [[}<cr>```<esc>O]]
