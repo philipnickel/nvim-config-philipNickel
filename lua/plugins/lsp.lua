@@ -9,11 +9,7 @@ return {
         'nvim-treesitter/nvim-treesitter',
       },
     },
-    opts = {
-      buffers = {
-        use_simple_parser = true,
-      }
-    },
+    opts = { },
   },
 
   {
