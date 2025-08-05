@@ -102,3 +102,7 @@ stylua .
 - Automatic reticulate switching when moving between R/Python chunks
 - R dataframe viewing with DT::datatable integration
 - Context-aware code execution based on cursor position in documents
+
+## Plugin Documentation Reference
+
+When working with plugins, documentation can always be referenced from their GitHub README files using the pattern `<username>/<repo>` (e.g., `folke/lazy.nvim`, `quarto-dev/quarto-nvim`).
