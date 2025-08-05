@@ -42,7 +42,7 @@ return {
     opts = {
         legacy_commands = false,
         ui = {
-          checkboxes = { [' '] = {}, ['x'] = {} },
+          -- checkboxes = { [' '] = {}, ['x'] = {} },
           enable = false,
         },
         workspaces = {

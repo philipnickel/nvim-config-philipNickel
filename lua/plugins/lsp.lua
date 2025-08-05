@@ -2,13 +2,14 @@ return {
 
   { -- for lsp features in code cells / embedded code
     'jmbuhr/otter.nvim',
-    dev = true,
+    dev = false,
     dependencies = {
       {
         'neovim/nvim-lspconfig',
         'nvim-treesitter/nvim-treesitter',
       },
     },
+    ---@type OtterConfig
     opts = { },
   },
 
