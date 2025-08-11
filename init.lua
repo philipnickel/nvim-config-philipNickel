@@ -6,6 +6,14 @@ require 'config.global'
 require 'config.lazy'
 require 'config.autocommands'
 require 'config.redir'
+require 'utils.keys'
 
 vim.cmd.colorscheme 'default'
-require'utils.colors'
+
+-- reload colors module if it was already loaded
+local mod = 'utils.colors'
+if package.loaded[mod] then
+  package.loaded[mod] = nil
+end
+
+require(mod)
