@@ -1,10 +1,13 @@
 return {
 
-  ---@module "neominimap.config.meta"
+  { 'mrjones2014/smart-splits.nvim',
+    opts = {}
+  },
+
   {
     'Isrothy/neominimap.nvim',
     version = 'v3.*.*',
-    enabled = true,
+    enabled = false,
     dependencies = {
       'lewis6991/gitsigns.nvim',
     },
@@ -13,9 +16,6 @@ return {
       -- The following options are recommended when layout == "float"
       vim.opt.wrap = false
       vim.opt.sidescrolloff = 36 -- Set a large value
-
-      --- Put your configuration here
-      ---@type Neominimap.UserConfig
       vim.g.neominimap = {
         auto_enable = false,
       }
@@ -59,7 +59,7 @@ return {
       local new_maker = function(filepath, bufnr, opts)
         opts = opts or {}
         filepath = vim.fn.expand(filepath)
-        vim.loop.fs_stat(filepath, function(_, stat)
+        vim.uv.fs_stat(filepath, function(_, stat)
           if not stat then
             return
           end
@@ -302,7 +302,7 @@ return {
     'folke/which-key.nvim',
     enabled = true,
     config = function()
-      require('which-key').setup {}
+      require('which-key').setup()
       require 'config.keymap'
     end,
   },
@@ -431,8 +431,10 @@ return {
         integrations = {
           markdown = {
             enabled = true,
+            clear_in_insert_mode = true,
             only_render_image_at_cursor = true,
             only_render_image_at_cursor_mode = "popup",
+            floating_windows = false,
             filetypes = { 'markdown', 'vimwiki', 'quarto' },
           },
         },
@@ -502,7 +504,7 @@ return {
         handle_zoom(bufnr)
       end, { buffer = true, desc = 'image [o]pen' })
 
-      vim.keymap.set('n', '<leader>ic', clear_all_images, { desc = 'image [c]lear' })
+      vim.keymap.set('n', '<leader>ic', image.clear, { desc = 'image [c]lear' })
     end,
   },
 

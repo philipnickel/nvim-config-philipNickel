@@ -26,6 +26,9 @@ vim.opt.shortmess:append 'A'
 -- mode is already in statusline
 vim.opt.showmode = false
 
+-- use a border around floating windows
+vim.o.winborder = 'rounded'
+
 -- use less indentation
 local tabsize = 2
 vim.opt.expandtab = true
@@ -128,6 +131,10 @@ vim.filetype.add {
     pyodide = 'python',
     webr = 'r',
   },
+  patter = {
+    ['/tmp/bash-fc*'] = 'bash'
+    
+  }
 }
 
 -- additional builtin vim packages

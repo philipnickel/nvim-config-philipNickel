@@ -1,7 +1,7 @@
 return {
   { -- profile your config to see what code is executed
     'stevearc/profile.nvim',
-    enabled = false,
+    enabled = true,
     config = function()
       local should_profile = os.getenv 'NVIM_PROFILE'
       if should_profile then
