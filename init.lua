@@ -6,7 +6,8 @@ require 'config.global'
 require 'config.lazy'
 require 'config.autocommands'
 require 'config.redir'
-require 'utils.keys'
+
+-- require 'utils.keys'
 
 vim.cmd.colorscheme 'default'
 
