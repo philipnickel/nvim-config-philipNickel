@@ -19,7 +19,7 @@ return {
     'NvChad/nvim-colorizer.lua',
     enabled = true,
     opts = {
-      filetypes = { '*' },
+      filetypes = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'svelte', 'astro' },
       user_default_options = {
         RGB = true, -- #RGB hex codes
         RRGGBB = true, -- #RRGGBB hex codes

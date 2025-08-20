@@ -27,8 +27,9 @@ return {
   { -- gh copilot
     'zbirenbaum/copilot.lua',
     enabled = true,
-    config = function()
-      require('copilot').setup {
+    event = 'InsertEnter',
+    cmd = { 'Copilot' },
+    opts = {
         suggestion = {
           enabled = true,
           auto_trigger = true,
@@ -42,9 +43,16 @@ return {
             dismiss = '<C-]>',
           },
         },
+        filetypes = {
+          quarto = function ()
+            if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), 'index.qmd') then
+              return false
+            end
+            return true
+          end,
+              },
         panel = { enabled = false },
       }
-    end,
   },
 
   { -- LLMs
