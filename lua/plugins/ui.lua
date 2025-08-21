@@ -367,13 +367,21 @@ return {
     end,
   },
 
+  {
+    "OXY2DEV/markview.nvim",
+    enabled = false,
+    lazy = false,
+    priority = 49,
+    opts = {
+    }
+  },
+
+
   { -- highlight markdown headings and code blocks etc.
     'MeanderingProgrammer/render-markdown.nvim',
-    enabled = true,
+    enabled = false,
     -- ft = {'quarto', 'markdown'},
     ft = { 'markdown'},
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -382,8 +390,17 @@ return {
       completions = {
         lsp = { enabled = false },
       },
+      link = {
+        enabled = false,
+        footnote = {
+          enabled = false,
+        },
+      },
       heading = {
         enabled = false,
+      },
+      quote = {
+        enabled = false
       },
       paragraph = {
         enabled = false,
