@@ -44,13 +44,8 @@ return {
           },
         },
         filetypes = {
-          quarto = function ()
-            if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), 'index.qmd') then
-              return false
-            end
-            return true
-          end,
-              },
+          markdown = false,
+        },
         panel = { enabled = false },
       }
   },
