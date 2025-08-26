@@ -45,6 +45,16 @@ return {
         },
         filetypes = {
           markdown = false,
+          quarto = function ()
+            -- disable if file is index.qmd and directory is phd-thesis
+            local filename = vim.fn.expand('%:t')
+            local dir = vim.fn.expand('%:p:h:t')
+            if filename == 'index.qmd' and dir == 'phd-thesis' then
+              return false
+            else
+              return true
+            end
+          end
         },
         panel = { enabled = false },
       }
