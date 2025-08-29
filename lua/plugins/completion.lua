@@ -10,10 +10,10 @@ return {
   { -- new completion plugin
     'saghen/blink.cmp',
     enabled = true,
-    version = '*',
     dev = false,
+    -- version = '*',
     -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
+    build = 'cargo build --release',
     lazy = false,
     dependencies = {
       { 'rafamadriz/friendly-snippets' },
@@ -43,8 +43,8 @@ return {
         enabled = false,
       },
       sources = {
-        -- default = { 'lazydev', 'lsp', 'path', 'references', 'git', 'snippets', 'buffer', 'emoji' },
-        default = { 'lazydev', 'lsp', 'path', 'references', 'git', 'snippets', 'emoji' },
+        default = { 'lazydev', 'lsp', 'path', 'references', 'git', 'snippets', 'buffer', 'emoji' },
+        -- default = { 'lazydev', 'lsp', 'path', 'references', 'git', 'snippets', 'emoji' },
         providers = {
           emoji = {
             module = 'blink-emoji',

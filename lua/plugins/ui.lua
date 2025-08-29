@@ -43,11 +43,21 @@ return {
       { 'nvim-telescope/telescope-dap.nvim' },
       {
         'jmbuhr/telescope-zotero.nvim',
-        dev = false,
+        dev = true,
         dependencies = {
           { 'kkharji/sqlite.lua' },
         },
         config = function()
+          local zotero = require'zotero'
+
+          local collection = nil
+          if vim.fn.getcwd():match('phd%-thesis') then
+            collection = 'phd-thesis'
+          end
+
+          zotero.setup{
+            collection = collection
+          }
           vim.keymap.set('n', '<leader>fz', ':Telescope zotero<cr>', { desc = '[z]otero' })
         end,
       },

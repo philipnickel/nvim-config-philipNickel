@@ -99,7 +99,13 @@ return {
         debounce_text_changes = 150,
       }
 
-      local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
+      local capabilities
+      local has_blink, blink = pcall(require, 'blink')
+      if has_blink then
+        capabilities = blink.get_lsp_capabilities({}, true)
+      else
+        capabilities = vim.lsp.protocol.make_client_capabilities()
+      end
 
       -- also needs:
       -- $home/.config/marksman/config.toml :
