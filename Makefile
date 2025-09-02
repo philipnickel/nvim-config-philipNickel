@@ -12,15 +12,9 @@ help:
 	@echo "  clean          - Remove nvim config and data"
 	@echo "  help           - Show this help message"
 
-# Full installation (tries deps, continues without if fails)
-install: backup
+# Full installation (installs user-space deps)
+install: backup install-deps
 	@echo "Installing nvim config..."
-	@if $(MAKE) install-deps 2>/dev/null; then \
-		echo "Dependencies installed successfully"; \
-	else \
-		echo "Warning: Could not install dependencies (no sudo access?)"; \
-		echo "You may need to ask your admin to install: neovim git curl build tools"; \
-	fi
 	git clone https://github.com/philipnickel/nvim-config-philipNickel.git ~/.config/nvim
 	@echo "Installation complete! Run 'nvim' to start."
 
@@ -69,29 +63,27 @@ install-nvim:
 	@echo "Run: source ~/.bashrc (or restart terminal)"
 	@~/.local/bin/nvim --version | head -1
 
-# Install system dependencies
+# Install user-space dependencies (no sudo required)
 install-deps:
-	@echo "Installing system dependencies..."
-	@if command -v apt > /dev/null; then \
-		sudo apt update && \
-		sudo apt install -y neovim git curl build-essential \
-			imagemagick libmagickwand-dev liblua5.1-0-dev \
-			luajit tree-sitter-cli ripgrep fd-find; \
-	elif command -v yum > /dev/null; then \
-		sudo yum install -y neovim git curl gcc-c++ make \
-			ImageMagick ImageMagick-devel lua-devel \
-			luajit luajit-devel ripgrep fd-find; \
-	elif command -v dnf > /dev/null; then \
-		sudo dnf install -y neovim git curl gcc-c++ make \
-			ImageMagick ImageMagick-devel lua-devel \
-			luajit luajit-devel ripgrep fd-find; \
-	elif command -v pacman > /dev/null; then \
-		sudo pacman -S --noconfirm neovim git curl base-devel \
-			imagemagick lua luajit tree-sitter ripgrep fd; \
-	else \
-		echo "Unsupported package manager. Please install dependencies manually."; \
-		exit 1; \
+	@echo "Installing user-space dependencies..."
+	@mkdir -p ~/.local/bin
+	@echo "Installing ripgrep..."
+	@if ! command -v rg >/dev/null 2>&1; then \
+		curl -L https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz | \
+		tar xz --strip-components=1 -C ~/.local/bin ripgrep-14.1.1-x86_64-unknown-linux-musl/rg; \
 	fi
+	@echo "Installing fd..."
+	@if ! command -v fd >/dev/null 2>&1; then \
+		curl -L https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-musl.tar.gz | \
+		tar xz --strip-components=1 -C ~/.local/bin fd-v10.2.0-x86_64-unknown-linux-musl/fd; \
+	fi
+	@echo "Installing tree-sitter..."
+	@if ! command -v tree-sitter >/dev/null 2>&1; then \
+		curl -L https://github.com/tree-sitter/tree-sitter/releases/download/v0.24.4/tree-sitter-linux-x64.gz | \
+		gunzip > ~/.local/bin/tree-sitter && chmod +x ~/.local/bin/tree-sitter; \
+	fi
+	@echo "User-space dependencies installed (git/curl assumed available)"
+	@echo "Note: Some image plugins may not work without ImageMagick (requires admin)"
 
 # Backup existing config
 backup:
