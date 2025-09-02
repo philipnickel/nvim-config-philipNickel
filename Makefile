@@ -34,18 +34,23 @@ install-no-deps: backup check-deps
 install-nvim:
 	@echo "Installing latest neovim..."
 	@mkdir -p ~/.local/bin
-	@echo "Downloading neovim AppImage..."
-	@curl -L -o ~/.local/bin/nvim.appimage https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-	@if [ ! -s ~/.local/bin/nvim.appimage ] || ! file ~/.local/bin/nvim.appimage | grep -q "executable"; then \
-		echo "AppImage download failed, trying alternative method..."; \
-		rm -f ~/.local/bin/nvim.appimage; \
-		curl -L -o /tmp/nvim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
+	@echo "Trying multiple download methods..."
+	@if curl -L -o ~/.local/bin/nvim.appimage "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim.appimage" && \
+		chmod u+x ~/.local/bin/nvim.appimage && \
+		~/.local/bin/nvim.appimage --version >/dev/null 2>&1; then \
+		echo "AppImage method succeeded"; \
+		ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim; \
+	elif curl -L -o /tmp/nvim.tar.gz "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz" && \
 		tar -xzf /tmp/nvim.tar.gz -C /tmp && \
 		cp /tmp/nvim-linux64/bin/nvim ~/.local/bin/nvim && \
-		chmod +x ~/.local/bin/nvim; \
+		chmod +x ~/.local/bin/nvim && \
+		~/.local/bin/nvim --version >/dev/null 2>&1; then \
+		echo "Tar.gz method succeeded"; \
+		rm -f /tmp/nvim.tar.gz; \
+		rm -rf /tmp/nvim-linux64; \
 	else \
-		chmod u+x ~/.local/bin/nvim.appimage; \
-		ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim; \
+		echo "All download methods failed. Please install neovim manually."; \
+		exit 1; \
 	fi
 	@ln -sf ~/.local/bin/nvim ~/.local/bin/nv
 	@echo "Adding ~/.local/bin to PATH..."
