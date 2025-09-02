@@ -36,9 +36,18 @@ install-nvim:
 	@mkdir -p ~/.local/bin
 	@echo "Downloading neovim AppImage..."
 	@curl -L -o ~/.local/bin/nvim.appimage https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-	@chmod u+x ~/.local/bin/nvim.appimage
-	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim
-	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nv
+	@if [ ! -s ~/.local/bin/nvim.appimage ] || ! file ~/.local/bin/nvim.appimage | grep -q "executable"; then \
+		echo "AppImage download failed, trying alternative method..."; \
+		rm -f ~/.local/bin/nvim.appimage; \
+		curl -L -o /tmp/nvim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
+		tar -xzf /tmp/nvim.tar.gz -C /tmp && \
+		cp /tmp/nvim-linux64/bin/nvim ~/.local/bin/nvim && \
+		chmod +x ~/.local/bin/nvim; \
+	else \
+		chmod u+x ~/.local/bin/nvim.appimage; \
+		ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim; \
+	fi
+	@ln -sf ~/.local/bin/nvim ~/.local/bin/nv
 	@echo "Adding ~/.local/bin to PATH..."
 	@if [ -f ~/.bashrc ]; then \
 		grep -q 'export PATH="$$HOME/.local/bin:$$PATH"' ~/.bashrc || \
