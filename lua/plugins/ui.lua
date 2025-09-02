@@ -286,6 +286,11 @@ return {
         diagnostics = {
           enable = true,
         },
+        actions = {
+          open_file = {
+            quit_on_open = true,
+          },
+        },
         on_attach = function(bufnr)
           local api = require('nvim-tree.api')
           
