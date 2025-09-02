@@ -29,17 +29,17 @@ install-nvim:
 	@echo "Installing latest neovim..."
 	@mkdir -p ~/.local/bin
 	@echo "Trying multiple download methods..."
-	@if curl -L -o ~/.local/bin/nvim.appimage "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim.appimage" && \
+	@if curl -L -o ~/.local/bin/nvim.appimage "https://github.com/neovim/neovim/releases/download/v0.11.0/nvim.appimage" && \
 		chmod u+x ~/.local/bin/nvim.appimage && \
 		~/.local/bin/nvim.appimage --version >/dev/null 2>&1; then \
 		echo "AppImage method succeeded"; \
 		ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim; \
-	elif curl -L -o /tmp/nvim.tar.gz "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz" && \
+	elif curl -L -o /tmp/nvim.tar.gz "https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux64.tar.gz" && \
 		tar -xzf /tmp/nvim.tar.gz -C /tmp && \
-		cp /tmp/nvim-linux64/bin/nvim ~/.local/bin/nvim && \
+		cp -r /tmp/nvim-linux64/* ~/.local/ && \
 		chmod +x ~/.local/bin/nvim && \
 		~/.local/bin/nvim --version >/dev/null 2>&1; then \
-		echo "Tar.gz method succeeded"; \
+		echo "Tar.gz method succeeded (full installation)"; \
 		rm -f /tmp/nvim.tar.gz; \
 		rm -rf /tmp/nvim-linux64; \
 	else \
