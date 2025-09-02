@@ -97,7 +97,7 @@ return {
 
   { -- gh copilot
     'zbirenbaum/copilot.lua',
-    enabled = true,
+    enabled = vim.fn.has('nvim-0.11') == 1,
     config = function()
       require('copilot').setup {
         suggestion = {

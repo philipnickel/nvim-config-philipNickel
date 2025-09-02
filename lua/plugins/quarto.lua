@@ -4,6 +4,9 @@ return {
     -- for complete functionality (language features)
     'quarto-dev/quarto-nvim',
     dev = false,
+    enabled = function()
+      return vim.fn.executable('quarto') == 1
+    end,
     opts = {
       lspFeatures = {
         enabled = true,
