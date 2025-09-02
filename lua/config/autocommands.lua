@@ -31,3 +31,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Open PDFs with zathura
+vim.api.nvim_create_autocmd('BufReadPre', {
+  pattern = '*.pdf',
+  callback = function()
+    vim.fn.jobstart({'zathura', vim.fn.expand('%')}, {detach = true})
+    vim.cmd('bdelete')
+  end,
+})

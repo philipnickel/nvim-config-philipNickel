@@ -64,12 +64,9 @@ local function send_cell()
   local molten_works = false
   local molten_active = ''
   if has_molten then
-    molten_works, molten_active = pcall(molten_status.kernels)
+    molten_works, molten_active = pcall(molten_status.initialized)
   end
   if molten_works and molten_active ~= vim.NIL and molten_active ~= '' then
-    molten_active = molten_status.initialized()
-  end
-  if molten_active ~= vim.NIL and molten_active ~= '' and molten_status.kernels() ~= 'Molten' then
     vim.cmd.QuartoSend()
     return
   end
@@ -151,11 +148,8 @@ nmap('n', 'nzz')
 nmap('<c-d>', '<c-d>zz')
 nmap('<c-u>', '<c-u>zz')
 
--- move between splits and tabs
-nmap('<c-h>', '<c-w>h')
-nmap('<c-l>', '<c-w>l')
-nmap('<c-j>', '<c-w>j')
-nmap('<c-k>', '<c-w>k')
+-- move between tabs (window navigation already defined above)
+-- Removed duplicate window navigation keymaps to avoid conflicts
 nmap('H', '<cmd>tabprevious<cr>')
 nmap('L', '<cmd>tabnext<cr>')
 

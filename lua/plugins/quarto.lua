@@ -69,6 +69,7 @@ return {
       vim.g.slime_target = 'neovim'
       vim.g.slime_no_mappings = true
       vim.g.slime_python_ipython = 1
+      vim.g.slime_default_config = {jobid = vim.v.servername}
     end,
     config = function()
       vim.g.slime_input_pid = false
@@ -135,10 +136,7 @@ return {
     build = ':UpdateRemotePlugins',
     init = function()
       vim.g.molten_image_provider = 'image.nvim'
-      -- vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = true
-      vim.g.molten_auto_open_html_in_browser = true
-      vim.g.molten_tick_rate = 200
     end,
     config = function()
       local init = function()

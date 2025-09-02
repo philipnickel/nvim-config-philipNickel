@@ -126,6 +126,15 @@ return {
               ['<esc>'] = actions.close,
               ['<c-j>'] = actions.move_selection_next,
               ['<c-k>'] = actions.move_selection_previous,
+              ['<CR>'] = function(prompt_bufnr)
+                local entry = require('telescope.actions.state').get_selected_entry()
+                if entry and entry.path and entry.path:match('%.pdf$') then
+                  actions.close(prompt_bufnr)
+                  vim.fn.jobstart({'zathura', entry.path}, {detach = true})
+                else
+                  actions.select_default(prompt_bufnr)
+                end
+              end,
             },
           },
         },
@@ -277,6 +286,30 @@ return {
         diagnostics = {
           enable = true,
         },
+        on_attach = function(bufnr)
+          local api = require('nvim-tree.api')
+          
+          -- Default mappings
+          api.config.mappings.default_on_attach(bufnr)
+          
+          -- Custom mapping for opening files
+          vim.keymap.set('n', '<CR>', function()
+            local node = api.tree.get_node_under_cursor()
+            if node and node.type == 'file' then
+              local filepath = node.absolute_path
+              if filepath:match('%.pdf$') then
+                -- Open PDF with zathura
+                vim.fn.jobstart({'zathura', filepath}, {detach = true})
+              else
+                -- Open normally in nvim
+                api.node.open.edit()
+              end
+            else
+              -- Handle directories normally
+              api.node.open.edit()
+            end
+          end, { buffer = bufnr, desc = 'Open file' })
+        end,
       }
     end,
   },

@@ -21,7 +21,6 @@ return {
   {
     'obsidian-nvim/obsidian.nvim',
     enabled = true,
-    lazy = false,
     ft = 'markdown',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -42,13 +41,16 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require('obsidian').setup {
         ui = {
-          checkboxes = { [' '] = {}, ['x'] = {} },
           enable = false,
         },
+        checkbox = {
+          order = { ' ', 'x' },
+        },
+        legacy_commands = false,
         workspaces = {
           {
             name = 'notes',
-            path = '~/notes',
+            path = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian Noter',
           },
         },
         -- Optional, for templates (see below).
@@ -89,6 +91,31 @@ return {
           return tostring(os.time()) .. '-' .. suffix
         end,
       }
+    end,
+  },
+
+  {
+    'toppair/peek.nvim',
+    event = { 'VeryLazy' },
+    build = 'deno task --quiet build:fast',
+    keys = {
+      { '<leader>np', function() require('peek').open() end, desc = 'markdown [p]review open', ft = 'markdown' },
+      { '<leader>nx', function() require('peek').close() end, desc = 'markdown preview e[x]it', ft = 'markdown' },
+    },
+    config = function()
+      require('peek').setup({
+        auto_load = true,
+        close_on_bdelete = true,
+        syntax = true,
+        theme = 'dark',
+        update_on_change = true,
+        app = 'webview',
+        filetype = { 'markdown' },
+        throttle_at = 200000,
+        throttle_time = 'auto',
+      })
+      vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+      vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
     end,
   },
 }
