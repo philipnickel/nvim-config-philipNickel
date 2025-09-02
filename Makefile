@@ -39,10 +39,20 @@ install-nvim:
 	@chmod u+x ~/.local/bin/nvim.appimage
 	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim
 	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nv
+	@echo "Adding ~/.local/bin to PATH..."
+	@if [ -f ~/.bashrc ]; then \
+		grep -q 'export PATH="$$HOME/.local/bin:$$PATH"' ~/.bashrc || \
+		echo 'export PATH="$$HOME/.local/bin:$$PATH"' >> ~/.bashrc; \
+		echo "Updated ~/.bashrc"; \
+	fi
+	@if [ -f ~/.zshrc ]; then \
+		grep -q 'export PATH="$$HOME/.local/bin:$$PATH"' ~/.zshrc || \
+		echo 'export PATH="$$HOME/.local/bin:$$PATH"' >> ~/.zshrc; \
+		echo "Updated ~/.zshrc"; \
+	fi
 	@echo "Neovim installed to ~/.local/bin/nvim"
 	@echo "Alias 'nv' created for quick access"
-	@echo "Add 'export PATH=\"\$$HOME/.local/bin:\$$PATH\"' to your ~/.bashrc or ~/.zshrc"
-	@echo "Then run: source ~/.bashrc (or ~/.zshrc)"
+	@echo "Run: source ~/.bashrc (or restart terminal)"
 	@~/.local/bin/nvim --version | head -1
 
 # Install system dependencies
