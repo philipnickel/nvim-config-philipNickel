@@ -38,7 +38,9 @@ install-nvim:
 	@curl -L -o ~/.local/bin/nvim.appimage https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 	@chmod u+x ~/.local/bin/nvim.appimage
 	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim
+	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nv
 	@echo "Neovim installed to ~/.local/bin/nvim"
+	@echo "Alias 'nv' created for quick access"
 	@echo "Add 'export PATH=\"\$$HOME/.local/bin:\$$PATH\"' to your ~/.bashrc or ~/.zshrc"
 	@echo "Then run: source ~/.bashrc (or ~/.zshrc)"
 	@~/.local/bin/nvim --version | head -1
