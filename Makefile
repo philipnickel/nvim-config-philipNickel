@@ -1,10 +1,11 @@
-.PHONY: install install-deps install-no-deps backup clean help check-deps
+.PHONY: install install-deps install-no-deps install-nvim backup clean help check-deps
 
 # Default target
 help:
 	@echo "Available targets:"
 	@echo "  install        - Full installation (backup + deps + config)"
 	@echo "  install-no-deps - Install config only (skip dependencies)"
+	@echo "  install-nvim   - Install/update neovim to latest version"
 	@echo "  install-deps   - Install system dependencies (requires sudo)"
 	@echo "  check-deps     - Check if dependencies are available"
 	@echo "  backup         - Backup existing nvim config"
@@ -28,6 +29,19 @@ install-no-deps: backup check-deps
 	@echo "Installing nvim config (skipping dependencies)..."
 	git clone https://github.com/philipnickel/nvim-config-philipNickel.git ~/.config/nvim
 	@echo "Installation complete! Run 'nvim' to start."
+
+# Install/update neovim to latest version
+install-nvim:
+	@echo "Installing latest neovim..."
+	@mkdir -p ~/.local/bin
+	@echo "Downloading neovim AppImage..."
+	@curl -L -o ~/.local/bin/nvim.appimage https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+	@chmod u+x ~/.local/bin/nvim.appimage
+	@ln -sf ~/.local/bin/nvim.appimage ~/.local/bin/nvim
+	@echo "Neovim installed to ~/.local/bin/nvim"
+	@echo "Add 'export PATH=\"\$$HOME/.local/bin:\$$PATH\"' to your ~/.bashrc or ~/.zshrc"
+	@echo "Then run: source ~/.bashrc (or ~/.zshrc)"
+	@~/.local/bin/nvim --version | head -1
 
 # Install system dependencies
 install-deps:
